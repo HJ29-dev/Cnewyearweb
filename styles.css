@@ -23,7 +23,7 @@ body {
     perspective: 1000px;
 }
 
-/* 信封样式 */
+/* 信封 */
 .envelope {
     position: relative;
     width: 600px;
