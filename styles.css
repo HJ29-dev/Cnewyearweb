@@ -1,0 +1,475 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.envelope-container {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    perspective: 1000px;
+}
+
+/* 信封样式 */
+.envelope {
+    position: relative;
+    width: 600px;
+    height: 400px;
+    margin: 50px auto;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.envelope:hover {
+    transform: scale(1.02);
+}
+
+.envelope.opened .envelope-flap {
+    transform: rotateX(-180deg);
+    z-index: 1;
+}
+
+.envelope.opened .envelope-front {
+    z-index: 2;
+}
+
+/* 信封背面 */
+.envelope-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #e8e8e8 0%, #d0d0d0 100%);
+    border-radius: 5px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+}
+
+/* 信封封面 */
+.envelope-front {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #f8f8f8 0%, #e8e8e8 100%);
+    border: 2px solid #d0d0d0;
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    transition: transform 0.6s ease;
+}
+
+.envelope.opened .envelope-front {
+    transform: translateY(-50px);
+}
+
+/* 日历区域 */
+.calendar-wrapper {
+    flex: 1;
+    background: white;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.early-celebration-btn {
+    margin-top: 10px;
+    padding: 8px 16px;
+    font-size: 0.9em;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    font-weight: bold;
+    align-self: center;
+    width: auto;
+}
+
+.early-celebration-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, #ee5a6f 0%, #ff6b6b 100%);
+}
+
+.early-celebration-btn:active {
+    transform: translateY(0);
+}
+
+.early-celebration-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+#calendar {
+    font-size: 0.85em;
+}
+
+/* 时间信息 */
+.time-info {
+    text-align: center;
+    color: #333;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+#current-date {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #667eea;
+    margin-bottom: 5px;
+}
+
+#current-time {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #ff6b6b;
+    font-family: 'Courier New', monospace;
+    margin-bottom: 5px;
+}
+
+#countdown {
+    font-size: 0.9em;
+    color: #666;
+}
+
+/* 打开提示 */
+.open-hint {
+    text-align: center;
+    color: #999;
+    font-size: 0.9em;
+    margin-top: auto;
+}
+
+.arrow-down {
+    font-size: 1.5em;
+    animation: bounce 1.5s ease-in-out infinite;
+    margin-top: 5px;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(10px);
+    }
+}
+
+/* 信封封口 */
+.envelope-flap {
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+    border: 2px solid #d0d0d0;
+    border-bottom: none;
+    border-radius: 5px 5px 0 0;
+    top: 0;
+    left: 0;
+    transform-origin: top;
+    transition: transform 0.8s ease;
+    z-index: 4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.seal {
+    font-size: 3em;
+    color: #ff6b6b;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* 信件内容 */
+.letter {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    backdrop-filter: blur(5px);
+}
+
+.letter.show {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.letter-content {
+    background: #fefefe;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow-y: auto;
+    animation: slideUp 0.5s ease;
+    z-index: 2001;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.letter-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #667eea;
+}
+
+.letter-header h1 {
+    font-size: 2.5em;
+    color: #667eea;
+    margin-bottom: 10px;
+}
+
+.letter-date {
+    color: #999;
+    font-size: 1em;
+}
+
+.letter-body {
+    line-height: 2;
+    color: #333;
+    font-size: 1.1em;
+    text-align: justify;
+    margin-bottom: 30px;
+}
+
+.letter-body p {
+    margin-bottom: 20px;
+    text-indent: 2em;
+}
+
+.letter-footer {
+    text-align: right;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+    color: #667eea;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.close-letter-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: all 0.3s ease;
+}
+
+.close-letter-btn:hover {
+    background: #ee5a6f;
+    transform: scale(1.05);
+}
+
+/* FullCalendar 样式覆盖 */
+.fc {
+    font-family: 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+}
+
+.fc-toolbar-title {
+    font-size: 1.2em !important;
+    color: #667eea !important;
+}
+
+.fc-button-primary {
+    background-color: #667eea !important;
+    border-color: #667eea !important;
+    font-size: 0.8em !important;
+    padding: 3px 8px !important;
+}
+
+.fc-button-primary:hover {
+    background-color: #5568d3 !important;
+    border-color: #5568d3 !important;
+}
+
+.fc-day-today {
+    background-color: #fff3cd !important;
+}
+
+.fc-event {
+    border-radius: 3px;
+    font-size: 0.7em;
+}
+
+.fc-col-header-cell {
+    font-size: 0.8em;
+}
+
+.fc-daygrid-day-number {
+    font-size: 0.8em;
+}
+
+/* 测试按钮 */
+.test-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    padding: 12px 30px;
+    font-size: 1.1em;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    font-weight: bold;
+    z-index: 100;
+}
+
+.test-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.test-btn:active {
+    transform: translateY(0);
+}
+
+/* 烟花画布 */
+#fireworks-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 500;
+}
+
+/* 庆祝文字 */
+.celebration-text {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 10000;
+    pointer-events: none;
+}
+
+.celebration-text.hidden {
+    display: none;
+}
+
+.celebration-text h1 {
+    font-size: 5em;
+    color: #ffd700;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+    animation: bounce 1s ease-in-out infinite;
+    margin-bottom: 20px;
+}
+
+.celebration-text h2 {
+    font-size: 3em;
+    color: #ff6b6b;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+    animation: bounce 1s ease-in-out infinite 0.2s;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .envelope {
+        width: 90%;
+        max-width: 500px;
+        height: 350px;
+    }
+    
+    .letter-content {
+        padding: 20px;
+    }
+    
+    .letter-header h1 {
+        font-size: 2em;
+    }
+    
+    .letter-body {
+        font-size: 1em;
+    }
+    
+    .celebration-text h1 {
+        font-size: 3em;
+    }
+    
+    .celebration-text h2 {
+        font-size: 2em;
+    }
+    
+    .calendar-wrapper {
+        padding: 5px;
+    }
+    
+    #calendar {
+        font-size: 0.7em;
+    }
+}

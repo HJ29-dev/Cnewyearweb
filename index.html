@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新年生日庆祝 - 信封</title>
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css' rel='stylesheet' />
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="envelope-container">
+        <!-- 信封 -->
+        <div class="envelope" id="envelope">
+            <!-- 信封背面 -->
+            <div class="envelope-back"></div>
+            
+            <!-- 信封封面 -->
+            <div class="envelope-front" id="envelope-front">
+                <!-- 日历区域 -->
+                <div class="calendar-wrapper">
+                    <div id="calendar"></div>
+                    <button class="early-celebration-btn" id="early-celebration-btn">🎆 提前过年</button>
+                </div>
+                
+                <!-- 时间显示 -->
+                <div class="time-info">
+                    <div id="current-date"></div>
+                    <div id="current-time"></div>
+                    <div id="countdown"></div>
+                </div>
+                
+                <!-- 打开提示 -->
+                <div class="open-hint">
+                    <p>点击信封打开</p>
+                    <div class="arrow-down">↓</div>
+                </div>
+            </div>
+            
+            <!-- 信封封口（可点击打开） -->
+            <div class="envelope-flap" id="envelope-flap">
+                <div class="seal">✉</div>
+            </div>
+        </div>
+        
+        <!-- 信件内容 -->
+        <div class="letter" id="letter">
+            <div class="letter-content">
+                <div class="letter-header">
+                    <h1>春节快乐</h1>
+                    <div class="letter-date" id="letter-date"></div>
+                </div>
+                <div class="letter-body" id="letter-body">
+                    <!-- 信件内容将通过 JavaScript 填充 -->
+                </div>
+                <div class="letter-footer">
+                    <p>祝健康平安</p>
+                    <p>金</p>
+                </div>
+                <button class="close-letter-btn" id="close-letter-btn">关闭信件</button>
+            </div>
+        </div>
+        
+        <!-- 测试按钮 -->
+        <button id="test-celebration-btn" class="test-btn">🎆 提前过年</button>
+        
+        <!-- 烟花容器 -->
+        <canvas id="fireworks-canvas"></canvas>
+        
+        <!-- 庆祝文字 -->
+        <div id="celebration-text" class="celebration-text hidden">
+            <h1>🎉 春节快乐！🎉</h1>
+            <h2>万事如意！</h2>
+        </div>
+    </div>
+
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+    <script src="script.js"></script>
+</body>
+</html>
